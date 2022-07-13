@@ -13,7 +13,16 @@ const QuestionsPageContent: React.FC<{ id: string }> = ({ id }) => {
     return <div>Question not found</div>;
   }
 
-  return <div>{data?.question}</div>;
+  return (
+    <div>
+      {data?.question}
+      <div>
+        {(data?.options as string[])?.map((option) => (
+          <div key={option}>{option}</div>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 const QuestionPage: NextPage = () => {
