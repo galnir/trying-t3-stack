@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import Link from "next/link";
 import React from "react";
 import { trpc } from "../utils/trpc";
 
@@ -38,7 +39,13 @@ const Home: NextPage = () => {
       <h1>Create T3 App</h1>
       <p>
         {data.map((question) => (
-          <div key={question.id}>{question.question}</div>
+          <>
+            <Link href={`/question/${question.id}`}>
+              <a>
+                <div key={question.id}>{question.question}</div>
+              </a>
+            </Link>
+          </>
         ))}
       </p>
       <QuestionCreator />
