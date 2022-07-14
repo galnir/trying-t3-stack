@@ -4,9 +4,15 @@ import { createQuestionValidator } from "../../shared/create-question-validator"
 import { createRouter } from "./context";
 
 export const questionRouter = createRouter()
-  .query("get-all", {
+  .query("get-all-my-questions", {
     async resolve({ ctx }) {
-      return await prisma.pollQuestion.findMany();
+      return await prisma.pollQuestion.findMany({
+        where: {
+          ownerToken: {
+            equals: ctx.token,
+          },
+        },
+      });
     },
   })
   .query("get-by-id", {

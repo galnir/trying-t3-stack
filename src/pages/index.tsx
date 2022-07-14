@@ -9,7 +9,7 @@ const QuestionCreator: React.FC = () => {
   const client = trpc.useContext();
   const { mutate, isLoading } = trpc.useMutation("questions.create", {
     onSuccess: () => {
-      client.invalidateQueries(["questions.get-all"]);
+      client.invalidateQueries(["questions.get-all-my-questions"]);
       if (!inputRef.current) return;
       inputRef.current.value = "";
     },
@@ -29,7 +29,7 @@ const QuestionCreator: React.FC = () => {
 };
 
 const Home: NextPage = () => {
-  const { data, isLoading } = trpc.useQuery(["questions.get-all"]);
+  const { data, isLoading } = trpc.useQuery(["questions.get-all-my-questions"]);
 
   if (isLoading || !data) return <div>Loading...</div>;
 
@@ -39,7 +39,7 @@ const Home: NextPage = () => {
       <p>
         {data.map((question) => (
           <>
-            <Link href={`/question/${question.id}`}>
+            <Link href={`/question/${question.id}`} key={question.id}>
               <a>
                 <div key={question.id}>{question.question}</div>
               </a>
