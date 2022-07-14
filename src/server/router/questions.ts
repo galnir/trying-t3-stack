@@ -14,12 +14,13 @@ export const questionRouter = createRouter()
       id: z.string(),
     }),
     async resolve({ input, ctx }) {
-      if (!ctx.token) return { error: "Unauthorized" };
-      return await prisma.pollQuestion.findFirst({
+      const question = await prisma.pollQuestion.findFirst({
         where: {
           id: input.id,
         },
       });
+
+      return { question, isOwner: question?.ownerToken === ctx.token };
     },
   })
   .mutation("create", {
