@@ -9,7 +9,7 @@ const QuestionsPageContent: React.FC<{ id: string }> = ({ id }) => {
     { id },
   ]);
 
-  if (!isLoading && !data) {
+  if ((!isLoading && !data) || error) {
     return <div>Question not found</div>;
   }
 
