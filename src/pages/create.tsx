@@ -2,7 +2,7 @@ import React from "react";
 import { trpc } from "../utils/trpc";
 
 import { useFieldArray, useForm } from "react-hook-form";
-
+import { useSession } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   CreateQuestionInputType,
@@ -11,9 +11,12 @@ import {
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
+import { authOptions } from "./api/auth/[...nextauth]";
+import { NextPage } from "next";
 
 const CreateQuestionForm = () => {
   const router = useRouter();
+
   const {
     register,
     handleSubmit,
@@ -141,7 +144,15 @@ const CreateQuestionForm = () => {
   );
 };
 
-const QuestionCreator: React.FC = () => {
+const QuestionCreator: NextPage = () => {
+  const { data: session } = useSession();
+
+  if (typeof window === "undefined") return null;
+
+  if (!session) {
+    return <p>Please login to create polls.</p>;
+  }
+
   return <CreateQuestionForm />;
 };
 
