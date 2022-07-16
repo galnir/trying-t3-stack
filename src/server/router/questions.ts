@@ -6,11 +6,11 @@ import { createRouter } from "./context";
 export const questionRouter = createRouter()
   .query("get-all-my-questions", {
     async resolve({ ctx }) {
-      if (!ctx.token) return [];
+      if (!ctx.token || !ctx.session || !ctx.session.userId) return [];
       return await prisma.pollQuestion.findMany({
         where: {
-          ownerToken: {
-            equals: ctx.token,
+          userId: {
+            equals: ctx.session.userId as string,
           },
         },
       });
@@ -27,18 +27,20 @@ export const questionRouter = createRouter()
         },
       });
 
-      return { question, isOwner: question?.ownerToken === ctx.token };
+      return { question, isOwner: question?.userId === ctx.session?.userId };
     },
   })
   .mutation("create", {
     input: createQuestionValidator,
     async resolve({ input, ctx }) {
-      if (!ctx.token) throw new Error("Unauthorized");
+      if (!ctx.token || !ctx.session || !ctx.session.userId)
+        throw new Error("Unauthorized");
+
       return await prisma.pollQuestion.create({
         data: {
           question: input.question,
           options: input.options,
-          ownerToken: ctx.token,
+          userId: ctx.session?.userId as string,
         },
       });
     },

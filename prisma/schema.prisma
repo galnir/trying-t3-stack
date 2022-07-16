@@ -46,6 +46,10 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
+
+    polls PollQuestion[]
+    votes Vote[]
+
 }
 
 model VerificationToken {
@@ -64,12 +68,11 @@ model PollQuestion {
 
     question String @db.VarChar(5000)
 
-    ownerToken String @db.VarChar(255)
-
     options Json
     Vote    Vote[]
 
-    @@index([ownerToken])
+    User   User?   @relation(fields: [userId], references: [id])
+    userId String?
 }
 
 model Vote {
@@ -78,13 +81,10 @@ model Vote {
 
     choice Int
 
-    voterToken String @db.VarChar(255)
-
     question   PollQuestion @relation(fields: [questionId], references: [id])
     questionId String
 
-
-    @@unique([voterToken, questionId])
-    @@index([voterToken])
+    User   User?   @relation(fields: [userId], references: [id])
+    userId String?
     @@index([questionId])
 }

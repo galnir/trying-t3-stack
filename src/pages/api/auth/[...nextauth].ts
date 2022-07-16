@@ -13,6 +13,18 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   secret: env.SECRET,
+  callbacks: {
+    session: async ({ session, user }) => {
+      session.userId = user.id;
+      return session;
+    },
+    jwt: async ({ user, token }) => {
+      if (user) {
+        token.uid = user.id;
+      }
+      return token;
+    },
+  },
 };
 
 export default NextAuth(authOptions);
