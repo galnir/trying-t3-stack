@@ -17,11 +17,7 @@ const QuestionsPageContent: React.FC<{ id: string }> = ({ id }) => {
     <div>
       {data?.isOwner && <div>You made this! </div>}
       <div>{data?.question?.question}</div>
-      <div>
-        {(data?.question?.options as string[])?.map((option) => (
-          <div key={option}>{option}</div>
-        ))}
-      </div>
+      <div></div>
     </div>
   );
 };

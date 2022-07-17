@@ -11,7 +11,6 @@ import {
 import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
-import { authOptions } from "./api/auth/[...nextauth]";
 import { NextPage } from "next";
 
 const CreateQuestionForm = () => {
@@ -150,7 +149,15 @@ const QuestionCreator: NextPage = () => {
   if (typeof window === "undefined") return null;
 
   if (!session) {
-    return <p>Please login to create polls.</p>;
+    return (
+      <div>
+        <Link href="/api/auth/signin">
+          <a>
+            <p>Please sign in to create polls.</p>
+          </a>
+        </Link>
+      </div>
+    );
   }
 
   return <CreateQuestionForm />;

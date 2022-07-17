@@ -16,6 +16,11 @@ export const questionRouter = createRouter()
       });
     },
   })
+  .query("get-all-questions", {
+    async resolve() {
+      return await prisma.pollQuestion.findMany();
+    },
+  })
   .query("get-by-id", {
     input: z.object({
       id: z.string(),
