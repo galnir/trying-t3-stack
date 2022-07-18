@@ -18,7 +18,18 @@ export const questionRouter = createRouter()
   })
   .query("get-all-questions", {
     async resolve() {
-      return await prisma.pollQuestion.findMany();
+      return await prisma.pollQuestion.findMany({
+        select: {
+          question: true,
+          id: true,
+          User: {
+            select: {
+              id: true,
+              name: true,
+            },
+          },
+        },
+      });
     },
   })
   .query("get-by-id", {
