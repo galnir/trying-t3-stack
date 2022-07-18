@@ -12,24 +12,15 @@ const Home: NextPage = () => {
 
   return (
     <div>
-      <Head>
-        <title>PollMaker</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
-      <main>
-        <div className="container">
-          <h1>PollMaker</h1>
-          <div>
-            {data.map(({ question, id }) => (
-              <div key={id}>
-                <Link href={`/question/${id}`}>
-                  <a>{question}</a>
-                </Link>
-              </div>
-            ))}
+      <div>
+        {data.map(({ question, id }) => (
+          <div key={id}>
+            <Link href={`/question/${id}`}>
+              <a>{question}</a>
+            </Link>
           </div>
-        </div>
-      </main>
+        ))}
+      </div>
     </div>
   );
 };
