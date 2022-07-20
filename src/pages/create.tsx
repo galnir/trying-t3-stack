@@ -76,7 +76,7 @@ const CreateQuestionForm = () => {
               <input
                 {...register("question")}
                 type="text"
-                className="input input-bordered w-full block text-gray-300 rounded-md"
+                className="p-1 input input-bordered w-full block text-black rounded-md placeholder:text-gray-600"
                 placeholder="How do magnets work?"
               />
               {errors.question && (
@@ -96,7 +96,7 @@ const CreateQuestionForm = () => {
                         {...register(`options.${index}.text`, {
                           required: true,
                         })}
-                        className="input input-bordered w-full text-gray-300 font-medium"
+                        className="p-1 input input-bordered w-full text-black font-medium placeholder:text-gray-600"
                       />
                       <button type="button" onClick={() => remove(index)}>
                         <svg
@@ -132,8 +132,8 @@ const CreateQuestionForm = () => {
             <div className="w-full mt-10">
               <input
                 type="submit"
-                className="btn w-full"
-                value="Create question"
+                className="btn w-full block px-2 py-1 text-xl bg-red-500 hover:bg-red-400 rounded"
+                value="Submit question"
               />
             </div>
           </div>

@@ -13,11 +13,16 @@ const QuestionsPageContent: React.FC<{ id: string }> = ({ id }) => {
     return <div>Question not found</div>;
   }
 
+  const options = data?.question?.options as any[];
   return (
     <div>
       {data?.isOwner && <div>You made this! </div>}
       <div>{data?.question?.question}</div>
-      <div></div>
+      <div>
+        {options
+          ? options.map(({ text }, index) => <div key={index}>{text}</div>)
+          : null}
+      </div>
     </div>
   );
 };
