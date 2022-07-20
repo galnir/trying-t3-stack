@@ -50,13 +50,8 @@ const CreateQuestionForm = () => {
   return (
     <div className="antialiased text-gray-100 p-6 min-h-screen">
       <Head>
-        <title>Create | OnAVote</title>
+        <title>Create Poll</title>
       </Head>
-      <header className="header flex w-full justify-between">
-        <Link href={"/"}>
-          <h1 className="text-4xl font-bold cursor-pointer">OnAVote</h1>
-        </Link>
-      </header>
       <div className="max-w-xl mx-auto py-12 md:max-w-2xl">
         <h2 className="text-2xl font-bold">Create a new poll</h2>
 

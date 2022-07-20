@@ -11,7 +11,7 @@ export default function PollPreview({
 }) {
   return (
     <div className="p-3 bg-red-500 w-1/4 relative">
-      <Link href={`/question/${id}`}>
+      <Link href={`/question/${id}`} prefetch>
         <a>{title}</a>
       </Link>
       <div className="absolute right-1 bottom-0 text-black">
