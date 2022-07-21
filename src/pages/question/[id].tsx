@@ -9,21 +9,34 @@ const QuestionsPageContent: React.FC<{ id: string }> = ({ id }) => {
     { id },
   ]);
 
+  const { mutate, data: voteResponse } = trpc.useMutation(
+    "questions.vote-on-question",
+    {
+      onSuccess: () => {
+        window.location.reload();
+      },
+    }
+  );
+
   if ((!isLoading && !data) || error) {
     return <div>Question not found</div>;
   }
 
   const options = data?.question?.options as any[];
   return (
-    <div>
-      {data?.isOwner && <div>You made this! </div>}
-      <div>{data?.question?.question}</div>
-      <div>
-        {options
-          ? options.map(({ text }, index) => <div key={index}>{text}</div>)
-          : null}
+    <main>
+      <div className="m-auto mt-20 rounded-md p-6 bg-slate-600 w-1/2">
+        {data?.isOwner && <div>You made this! </div>}
+        <div className="w-full flex flex-col justify-center items-center">
+          <div className="text-2xl text-black">{data?.question?.question}</div>
+          <div className="mt-10 w-full flex justify-around">
+            {options
+              ? options.map(({ text }, index) => <div key={index}>{text}</div>)
+              : null}
+          </div>
+        </div>
       </div>
-    </div>
+    </main>
   );
 };
 

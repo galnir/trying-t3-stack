@@ -46,6 +46,28 @@ export const questionRouter = createRouter()
       return { question, isOwner: question?.userId === ctx.session?.userId };
     },
   })
+  .mutation("vote-on-question", {
+    input: z.object({
+      questionId: z.string(),
+      option: z.number().min(0).max(10),
+    }),
+    async resolve({ input, ctx }) {
+      if (!ctx.token || !ctx.session) throw new Error("Unauthroized");
+      await prisma.vote.create({
+        data: {
+          questionId: input.questionId,
+          choice: input.option,
+          userId: ctx.session.userId as string,
+        },
+      });
+
+      return await prisma.vote.groupBy({
+        where: { questionId: input.questionId },
+        by: ["choice"],
+        _count: true,
+      });
+    },
+  })
   .mutation("create", {
     input: createQuestionValidator,
     async resolve({ input, ctx }) {
